@@ -1,14 +1,16 @@
 <html>
     <head>
+        <title>Site Note</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="index.css">
-    </head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">    </head>
     <body>
-        <input type="text" id="input-el">
-        <button id="input-btn">SAVE INPUT</button>
-        <button id="tab-btn">SAVE TAB</button>
-        <button id="delete-btn">DELETE ALL</button>
-        <ul id="ul-el">
-        </ul>
+        <div>
+            <input type="text" id="input-el">
+            <button id="new-btn" onclick="location.href='newNote/newNote.html'"><span><i class="bi bi-plus icon-1"></i>NEW</span></button>
+            <button id="delete-btn"><span><i class="bi bi-trash icon-2"></i>DELETE ALL</span></button>
+        </div>
+
         <script src="index.js"></script>
     </body>
 </html>

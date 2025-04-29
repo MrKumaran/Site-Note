@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Site Note new-note</title>
+    <link rel="stylesheet" href="newNote.css">
+</head>
+
+<body>
+    <div>
+        <div id = "title-div">
+                <label for="title">Title:</label>
+                <input type="text" id="title" placeholder="Title">
+                <label for="domain">Sitename:</label>
+                <input type="text" id="domain" placeholder="Sitename">
+        </div>
+        <span style="width: 100%;">
+            <label for="Note">Note:</label>
+            <textarea type="text-area" id="Note" placeholder="Notes..."></textarea>
+        </span>
+        <span>
+            <button id="save-btn">Save</button>
+            <button id="cancel-btn" onclick="history.back()">Cancel</button>
+        </span>
+    </div>
+</body>
+
+</html>

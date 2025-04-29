@@ -1,5 +1,4 @@
 body {
-    margin: 0;
     padding: 10px;
     font-family: Arial, Helvetica, sans-serif;
     min-width: 400px;
@@ -7,37 +6,55 @@ body {
 
 input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     box-sizing: border-box;
-    border: 1px solid #5f9341;
-    margin-bottom: 4px;
+    border: 2px solid black;
+    margin-bottom: 8px;
+    border-radius: 25px;
+    font-size: 20px;
+}
+
+input:focus {
+    outline: none;
 }
 
 button {
-    background: #5f9341;
-    color: white;
-    padding: 10px 20px;
-    border: 1px solid #5f9341;
-    font-weight: bold;
-}
-
-#delete-btn {
     background: white;
-    color: #5f9341;
+    color: black;
+    padding: 10px 20px;
+    border: 2px solid black;
+    font-weight: bold;
+    border-radius: 25px;
+    text-align: center;
+    margin-right: 4px;
 }
 
-ul {
-    margin-top: 20px;
-    list-style: none;
-    padding-left: 0;
+.icon-1 { 
+    font-size: 24px;
+    -webkit-text-stroke: 1.5px;
+    padding-right: 4px;
 }
 
-li {
-    margin-top: 5px;
+.icon-2{
+    font-size: 24px;
+    -webkit-text-stroke: .25px;
+    padding-right: 4px;
 }
 
-a {
-    color: #5f9341;
+span {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
 }
 
+button:hover {
+    background: rgb(0, 255, 0);
+    color: whitesmoke;
+    border: 2px solid rgb(0, 255, 0);
+}
 
+#delete-btn:hover {
+    background: red;
+    color: aliceblue;
+    border: 2px solid red;
+}

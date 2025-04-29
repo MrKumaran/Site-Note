@@ -1,10 +1,11 @@
 let myLeads = []
 const inputEl = document.getElementById("input-el")
-const inputBtn = document.getElementById("input-btn")
+const inputBtn = document.getElementById("save-btn")
 const ulEl = document.getElementById("ul-el")
 const deleteBtn = document.getElementById("delete-btn")
 const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads") )
-const tabBtn = document.getElementById("tab-btn")
+const tabBtn = document.getElementById("save-tab-btn")
+let count = 0
 
 if (leadsFromLocalStorage) {
     myLeads = leadsFromLocalStorage
@@ -27,6 +28,9 @@ function render(leads) {
                 <a target='_blank' href='${leads[i]}'>
                     ${leads[i]}
                 </a>
+                <button class = "inner-button" onclick = "removeNote()">
+                <i class="fa fa-trash-o"></i>
+                </button>
             </li>
         `
     }
@@ -45,3 +49,7 @@ inputBtn.addEventListener("click", function() {
     localStorage.setItem("myLeads", JSON.stringify(myLeads) )
     render(myLeads)
 })
+
+function removeNote(){
+    console.log("clicked")
+}
