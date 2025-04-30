@@ -22,7 +22,6 @@ cancelbtn.addEventListener("click", cancelNoteMaking)
 // Refresh list
 setInterval(renderNotes(),100);
 
-
 function newNote() {
     homePopup.style.display = 'none'
     newNotePopup.style.display = 'flex'
@@ -83,7 +82,7 @@ function renderNotes(){
     const notesList = document.getElementById("noteList")
     let listItems = `
             <li>
-                <span><p>Title</p><p>Sitename</p><p>Notes</p></span>
+                <span id = "titleTag"><p>Title</p><p>Site</p><p>Notes</p></span>
             </li>
             `
     count = savedNotes.length 
