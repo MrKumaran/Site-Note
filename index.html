@@ -3,14 +3,37 @@
         <title>Site Note</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="index.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">    </head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">   
+    </head>
     <body>
-        <div>
+    <!-- Home Popup -->
+        <div id = "homePopup">
             <input type="text" id="input-el">
-            <button id="new-btn" onclick="location.href='newNote/newNote.html'"><span><i class="bi bi-plus icon-1"></i>NEW</span></button>
-            <button id="delete-btn"><span><i class="bi bi-trash icon-2"></i>DELETE ALL</span></button>
+            <button id="new-btn" class="homeButtons" ><span><i class="bi bi-plus icon-1"></i>NEW</span></button>
+            <button id="delete-btn" class="homeButtons"><span><i class="bi bi-trash icon-2"></i>DELETE ALL</span></button>
+            <ul>
+                <!-- Render Notes from local storage via JS -->
+            </ul>
         </div>
-
+    <!-- New Note Popup -->
+        <div id = "newNotePopup">
+            <div id = "title-div">
+                <label for="title">Title:</label>
+                <input type="text" id="title" placeholder="Title" class="newNoteInputs">
+                <label for="domain">Sitename:</label>
+                <input type="text" id="domain" placeholder="Sitename" class="newNoteInputs">
+        </div>
+        <span style="width: 100%;">
+            <label for="Note">Note:</label>
+            <textarea type="text-area" id="Note" placeholder="Notes..."></textarea>
+        </span>
+        <span>
+            <button id="save-btn" class="newNoteButtons">Save</button>
+            <button id="cancel-btn" class="newNoteButtons">Cancel</button>
+        </span>
+        </div>
+        <div id="toast"></div>
+        <script src="https://unpkg.com/webextension-polyfill@0.10.0/dist/browser-polyfill.min.js"></script>
         <script src="index.js"></script>
     </body>
 </html>

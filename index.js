@@ -1,55 +1,66 @@
-let myLeads = []
-const inputEl = document.getElementById("input-el")
-const inputBtn = document.getElementById("save-btn")
-const ulEl = document.getElementById("ul-el")
-const deleteBtn = document.getElementById("delete-btn")
-const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads") )
-const tabBtn = document.getElementById("save-tab-btn")
-let count = 0
+const homePopup = document.getElementById("homePopup")
+const newNotePopup = document.getElementById("newNotePopup")
+const newNotebtn = document.getElementById("new-btn")
+const deleteAllbtn = document.getElementById("delete-btn")
+const savebtn = document.getElementById("save-btn")
+const cancelbtn = document.getElementById("cancel-btn")
+const savedNotes = JSON.parse( localStorage.getItem("myNotes") ) || []
 
-if (leadsFromLocalStorage) {
-    myLeads = leadsFromLocalStorage
-    render(myLeads)
-}
-
-tabBtn.addEventListener("click", function(){    
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        myLeads.push(tabs[0].url)
-        localStorage.setItem("myLeads", JSON.stringify(myLeads) )
-        render(myLeads)
-    })
+newNotebtn.addEventListener("click", newNote)
+deleteAllbtn.addEventListener("dblclick", deleteAllNotes)
+deleteAllbtn.addEventListener("click", function(){
+    toast("Double click to Delete all")
 })
+savebtn.addEventListener("click", saveNotes)
+cancelbtn.addEventListener("click", cancelNoteMaking)
 
-function render(leads) {
-    let listItems = ""
-    for (let i = 0; i < leads.length; i++) {
-        listItems += `
-            <li>
-                <a target='_blank' href='${leads[i]}'>
-                    ${leads[i]}
-                </a>
-                <button class = "inner-button" onclick = "removeNote()">
-                <i class="fa fa-trash-o"></i>
-                </button>
-            </li>
-        `
-    }
-    ulEl.innerHTML = listItems
+function newNote() {
+    homePopup.style.display = 'none'
+    newNotePopup.style.display = 'flex'
 }
 
-deleteBtn.addEventListener("dblclick", function() {
+function deleteAllNotes() {
     localStorage.clear()
-    myLeads = []
-    render(myLeads)
-})
+    toast("Deleted all Notes")
+}
 
-inputBtn.addEventListener("click", function() {
-    myLeads.push(inputEl.value)
-    inputEl.value = ""
-    localStorage.setItem("myLeads", JSON.stringify(myLeads) )
-    render(myLeads)
-})
+function saveNotes() {
+    const title = document.getElementById("title")
+    const domainName = document.getElementById("domain")
+    const notes = document.getElementById("Note")
+    let Notes = savedNotes
+    if (title.value && notes.value) {
+        Notes.push([title.value, domainName.value, notes.value])
+        localStorage.setItem("myNotes", JSON.stringify(Notes))
+        toast("Notes Saved")
+        title.value = ''
+        domainName.value = ''
+        notes.value = ''
+    }
+    else {
+        if (title.value) {
+            toast("Notes can't be blank")
+        }
+        else {
+            toast("Title can't be blank")
+        }
+    }
+}
 
-function removeNote(){
-    console.log("clicked")
+function toast(message) {
+    var x = document.getElementById("toast");
+    x.innerText = message
+    x.className = "show";
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+}
+
+function cancelNoteMaking() {
+    const title = document.getElementById("title")
+    const domainName = document.getElementById("domain")
+    const notes = document.getElementById("Note")
+    title.value = ''
+    domainName.value = ''
+    notes.value = ''
+    homePopup.style.display = 'block'
+    newNotePopup.style.display = 'none'
 }
