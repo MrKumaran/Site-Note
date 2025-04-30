@@ -8,10 +8,12 @@
     <body>
     <!-- Home Popup -->
         <div id = "homePopup">
-            <input type="text" id="input-el">
-            <button id="new-btn" class="homeButtons" ><span><i class="bi bi-plus icon-1"></i>NEW</span></button>
-            <button id="delete-btn" class="homeButtons"><span><i class="bi bi-trash icon-2"></i>DELETE ALL</span></button>
-            <ul>
+            <!-- <input type="text" id="input-el"> later -->
+            <span id="homePopupButtonSpan">
+                <button id="new-btn" class="homeButtons" ><span><i class="bi bi-plus icon-1"></i>NEW</span></button>
+                <button id="delete-btn" class="homeButtons"><span><i class="bi bi-trash icon-2"></i>DELETE ALL</span></button>
+            </span>
+            <ul id = "noteList">
                 <!-- Render Notes from local storage via JS -->
             </ul>
         </div>
@@ -22,7 +24,7 @@
                 <input type="text" id="title" placeholder="Title" class="newNoteInputs">
                 <label for="domain">Sitename:</label>
                 <input type="text" id="domain" placeholder="Sitename" class="newNoteInputs">
-        </div>
+            </div>
         <span style="width: 100%;">
             <label for="Note">Note:</label>
             <textarea type="text-area" id="Note" placeholder="Notes..."></textarea>
@@ -33,7 +35,6 @@
         </span>
         </div>
         <div id="toast"></div>
-        <script src="https://unpkg.com/webextension-polyfill@0.10.0/dist/browser-polyfill.min.js"></script>
         <script src="index.js"></script>
     </body>
 </html>
