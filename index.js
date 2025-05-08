@@ -1,6 +1,7 @@
 // Popup screen
 const homePopup = document.getElementById("homePopup")
 const newNotePopup = document.getElementById("newNotePopup")
+const fullViewNotePopup = document.getElementById("noteFullView")
 
 //  Home popup buttons
 const newNotebtn = document.getElementById("new-btn")
@@ -21,9 +22,13 @@ deleteAllbtn.addEventListener("click", function(){
 savebtn.addEventListener("click", saveNotes)
 cancelbtn.addEventListener("click", quitNoteMaking)
 
+// getting data from local storage
+const savedNotes = JSON.parse(localStorage.getItem("myNotes")) || []
+
 // start render notes
 renderNotes()
 
+// Home popup functions
 function newNote() {
     homePopup.style.display = 'none'
     newNotePopup.style.display = 'flex'
@@ -37,54 +42,12 @@ function deleteAllNotes() {
     }
 }
 
-function saveNotes() {
-    const noteTitle = document.getElementById("title")
-    const notes = document.getElementById("Note")
-    let Notes = JSON.parse( localStorage.getItem("myNotes") ) || []
-    if (noteTitle.value && notes.value) {
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-            const url = new URL(tabs[0].url)
-            const match = url.hostname.match(/^(?:www\.)?([a-zA-Z0-9-]+)\.com$/)
-            const domain = match ? match[1] : null;
-            Notes.push([tabs[0].favIconUrl, domain, url, noteTitle.value, notes.value])
-            localStorage.setItem("myNotes", JSON.stringify(Notes))
-            noteTitle.value = ''
-            notes.value = ''
-        })
-        homePopup.style.display = 'block'
-        newNotePopup.style.display = 'none'
-        toast("Notes Saved")
-        renderNotes()
-        }
-    else {
-        if (noteTitle.value) {
-            toast("Notes can't be blank")
-        }
-        else {
-            toast("Title can't be blank")
-        }
-    }
-}
-
-async function toast(message) {
-    var x = document.getElementById("toast");
-    x.innerText = message
-    x.className = "show";
-    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
-}
-
-function quitNoteMaking() {
-    document.getElementById("title").value = ''
-    document.getElementById("Note").value = ''
-    homePopup.style.display = 'block'
-    newNotePopup.style.display = 'none'
-}
-
 async function renderNotes() {
-    const savedNotes = JSON.parse(localStorage.getItem("myNotes")) || []
+    // Note list unorder list
     const notesList = document.getElementById("noteList")
     notesList.innerHTML = ""
-    
+
+    // header li-span
     const headerLi = document.createElement("li")
     const headerSpan = document.createElement("span")
     const faviconHeaderSpace = document.createElement("img")
@@ -106,11 +69,11 @@ async function renderNotes() {
     headerSpan.appendChild(notesHeader)
     headerLi.appendChild(headerSpan)
     notesList.appendChild(headerLi)
-    
 
-    for (let i = 0; i < savedNotes.length; i++) {
+    // loop to render all notes in local storage
+    for (let i = savedNotes.length-1; i > -1 ; i--) {
         const [favIconUrl, domain, url, title, note] = savedNotes[i]
-        
+
         // HTML tags creation
         const li = document.createElement("li")
         const span = document.createElement("span")
@@ -133,17 +96,27 @@ async function renderNotes() {
         // p tag items
         noteTitle.textContent = title
         notes.textContent = note
-        
+
         // delete icon
         icon.className = "bi bi-trash deleteIcon"
 
         // li class name
-        span.className = "spanItems"
-        
+        li.className = "noteListLI"
 
+        // li-note to identifiy
+        li.dataset.note = i
+
+        // appending tags
+         domainName.appendChild(link)
+         span.appendChild(img)
+         span.appendChild(domainName)
+         span.appendChild(noteTitle)
+         span.appendChild(notes)
+         span.appendChild(icon)
+         li.appendChild(span)
+         notesList.appendChild(li)
 
         /*
-        layout in html equivalent 
         0-> li
         1-> span
         2-> img
@@ -151,45 +124,101 @@ async function renderNotes() {
         4-> noteTitle
         5-> notes
         
-        example:
-        <li>
-        <span>
-        <img src=${favIconUrl} alr = "Site icon"/>
-        <p id="domain"><a id = "link" href= ${url} target="_blank">${domainName}</a></p>
-        <p id="noteTtile">${title}</p>
-        <p id ="notes">${note}</p>
-        </span>
+        layout in html equivalent
+        <li class = "noteListLI" dataSet=${title}>
+            <span class = "spanItems">
+                <img src=${favIconUrl} alr = "Site icon"/>
+                <p id="domain"><a id = "link" href= ${url} target="_blank">${domainName}</a></p>
+                <p id="noteTtile">${title}</p>
+                <p id ="notes">${note}</p>
+                <i class = "bi bi-trash deleteIcon"></i>
+            </span>
         </li>
         */
-       // appending tags
-        domainName.appendChild(link)
-        span.appendChild(img)
-        span.appendChild(domainName)
-        span.appendChild(noteTitle)
-        span.appendChild(notes)
-        span.appendChild(icon)
-        li.appendChild(span)
-        notesList.appendChild(li)
     }
-    
-    /* 
-    Old cold didn't work for a tag as expected so re-written it with JS Html DOM creations
+    // Check for click on li element in noteList ul
+    notesList.addEventListener("click", function(event) {
+        const li = event.target.closest(".noteListLI")
+        if (li && notesList.contains(li)) {
+            fullViewNote(li.dataset.note)
+            }
+        }
+    )
+}
 
-    let savedNotes = JSON.parse( localStorage.getItem("myNotes") ) || []
-    const notesList = document.getElementById("noteList")
-    let listItems = 
-            <li>
-                <span id = "titleTag"><p>Title</p><p>Site</p><p>Notes</p></span>
-            </li>
-            
-    count = savedNotes.length 
-    for(let _ = 0; _ < count; _++){
-        listItems += 
-        <li>
-            <span><p>${savedNotes[_][0]}</p><p><a target='_blank' href='${tabURL}'>${savedNotes[_][1]}</a></p><p>${savedNotes[_][2]}</p></span>
-        </li>
-    
+// Save notes popup functions
+function saveNotes() {
+    const noteTitle = document.getElementById("title")
+    const notes = document.getElementById("Note")
+    let Notes = savedNotes
+    if (noteTitle.value && notes.value) {
+        chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, 
+            function(tabs){
+                const url = new URL(tabs[0].url)
+                const match = url.hostname.match(/^(?:www\.)?([a-zA-Z0-9-]+)\.com$/) // need to change regex
+                const domain = match ? match[1] : null
+                Notes.push([tabs[0].favIconUrl, domain, url, noteTitle.value, notes.value])
+                localStorage.setItem("myNotes", JSON.stringify(Notes))
+                noteTitle.value = ''
+                notes.value = ''
+            }
+        )
+        homePopup.style.display = 'block'
+        newNotePopup.style.display = 'none'
+        toast("Notes Saved")
+        renderNotes()
+        }
+    else {
+        if (noteTitle.value) {
+            toast("Notes can't be blank")
+        }
+        else {
+            toast("Title can't be blank")
+        }
     }
-    notesList.innerHTML = listItems
-    */
+}
+
+function quitNoteMaking() {
+    homePopup.style.display = 'block'
+    newNotePopup.style.display = 'none'
+}
+
+// Note full view popup function
+function fullViewNote(index){
+    homePopup.style.display = 'none'
+    fullViewNotePopup.style.display = 'flex'
+    const [favIconUrl, domain, url, title, note] = savedNotes[index]
+    
+    // Dom element
+    const titleArea = document.getElementById("titleArea")
+    const noteViewUrl = document.getElementById("noteViewUrl")
+    const noteFavIcon = document.getElementById("noteFavIcon")
+    const noteDomain = document.getElementById("noteDomain")
+    const noteArea = document.getElementById("noteArea")
+    
+    // content
+    titleArea.textContent = title
+    noteViewUrl.href = url
+    noteFavIcon.src = favIconUrl
+    noteDomain.textContent = domain
+    noteArea.textContent = note
+
+    const backIcon = document.getElementById("backIconID")
+    backIcon.addEventListener("click", exitFullViewNote)
+}
+
+function exitFullViewNote(){
+    homePopup.style.display = 'block'
+    fullViewNotePopup.style.display = 'none'
+}
+
+// All popup functions
+async function toast(message) {
+    var x = document.getElementById("toast");
+    x.innerText = message
+    x.className = "show";
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
 }
