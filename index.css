@@ -1,6 +1,7 @@
 body {
     margin: auto;
-    padding-top: 20px;
+    padding-top: 40px;
+    padding: 20px;
     font-family: Arial, Helvetica, sans-serif;
     width: auto;
     min-width: 400px;
@@ -83,12 +84,19 @@ ul {
     list-style-type: none;
 }
 
-#titleTag {
+#headerSpan {
+    align-items: center;
     font-weight: 900;
 }
 
+#faviconImage{
+    margin-right: 14px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+}
+
 #titleTag p {
-    border-bottom: 1px solid white;
 }
 
 li {
@@ -99,13 +107,41 @@ li {
 
 li span {
     display: grid;
-    grid-template-columns: .75fr 1fr 2fr;
+    grid-column:auto;
+    grid-template-columns: .50fr .75fr 1fr 1fr .1fr;
+    grid-template-columns: 25px 100px 100px 100px 10px;
     flex-flow: row wrap;
 }
 
-li p {
+li span p {
+    border-left: 1px solid white;
+    margin-right: 12px;
+    margin-left: 12px;
+    padding-left: 12px;
     font-size: 16px;
     font-size: large;
+}
+
+.spanItems{
+    align-items: center;
+}
+
+.deleteIcon{
+    color: white;
+    font-size: 16px;
+    -webkit-text-stroke: .25px;
+}
+
+.deleteIcon:hover{
+    color: red;
+}
+
+img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border-radius: 50px;
 }
 
 /* new Note popup styles */

@@ -21,8 +21,8 @@ deleteAllbtn.addEventListener("click", function(){
 savebtn.addEventListener("click", saveNotes)
 cancelbtn.addEventListener("click", quitNoteMaking)
 
-// Refresh list
-setInterval(renderNotes,100);
+// start render notes
+renderNotes()
 
 function newNote() {
     homePopup.style.display = 'none'
@@ -43,10 +43,10 @@ function saveNotes() {
     let Notes = JSON.parse( localStorage.getItem("myNotes") ) || []
     if (noteTitle.value && notes.value) {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-            console.log(tabs)
-            console.log(tabs[0])
             const url = new URL(tabs[0].url)
-            Notes.push([tabs[0].favIconUrl, url.hostname, tabs[0].url, noteTitle.value, notes.value])
+            const match = url.hostname.match(/^(?:www\.)?([a-zA-Z0-9-]+)\.com$/)
+            const domain = match ? match[1] : null;
+            Notes.push([tabs[0].favIconUrl, domain, url, noteTitle.value, notes.value])
             localStorage.setItem("myNotes", JSON.stringify(Notes))
             noteTitle.value = ''
             notes.value = ''
@@ -66,7 +66,7 @@ function saveNotes() {
     }
 }
 
-function toast(message) {
+async function toast(message) {
     var x = document.getElementById("toast");
     x.innerText = message
     x.className = "show";
@@ -84,22 +84,29 @@ async function renderNotes() {
     const savedNotes = JSON.parse(localStorage.getItem("myNotes")) || []
     const notesList = document.getElementById("noteList")
     notesList.innerHTML = ""
-    /*
+    
     const headerLi = document.createElement("li")
     const headerSpan = document.createElement("span")
-    const titleHeader = document.createElement("p")
-    const siteHeader = document.createElement("p")
+    const faviconHeaderSpace = document.createElement("img")
+    const domainNameHeader = document.createElement("p")
+    const noteTitleHeader = document.createElement("p")
     const notesHeader = document.createElement("p")
-    headerSpan.id = "titleTag"
-    titleHeader.textContent = "Title"
-    siteHeader.textContent = "Site"
-    notesHeader.textContent = "Notes"
-    headerSpan.appendChild(titleHeader)
-    headerSpan.appendChild(siteHeader)
+
+    headerSpan.id = "headerSpan"
+    faviconHeaderSpace.src = "favicon.svg"
+    faviconHeaderSpace.id = "faviconImage"
+    faviconHeaderSpace.alt = "favicon icon"
+    domainNameHeader.textContent = "Domain"
+    noteTitleHeader.textContent = "Title"
+    notesHeader.textContent = "Note"
+
+    headerSpan.appendChild(faviconHeaderSpace)
+    headerSpan.appendChild(domainNameHeader)
+    headerSpan.appendChild(noteTitleHeader)
     headerSpan.appendChild(notesHeader)
     headerLi.appendChild(headerSpan)
     notesList.appendChild(headerLi)
-    */
+    
 
     for (let i = 0; i < savedNotes.length; i++) {
         const [favIconUrl, domain, url, title, note] = savedNotes[i]
@@ -112,6 +119,7 @@ async function renderNotes() {
         const noteTitle = document.createElement("p")
         const link = document.createElement("a")
         const notes = document.createElement("p")
+        const icon = document.createElement("i")
 
         // img
         img.src = favIconUrl
@@ -126,36 +134,46 @@ async function renderNotes() {
         noteTitle.textContent = title
         notes.textContent = note
         
-        // appending tags
-        /* 
+        // delete icon
+        icon.className = "bi bi-trash deleteIcon"
+
+        // li class name
+        span.className = "spanItems"
+        
+
+
+        /*
+        layout in html equivalent 
         0-> li
         1-> span
         2-> img
         3-> domain
         4-> noteTitle
         5-> notes
-
+        
         example:
         <li>
-            <span>
-                <img src=${favIconUrl} alr = "Site icon"/>
-                <p id="domain"><a id = "link" href= ${url} target="_blank">${domainName}</a></p>
-                <p id="noteTtile">${title}</p>
-                <p id ="notes">${note}</p>
-            </span>
+        <span>
+        <img src=${favIconUrl} alr = "Site icon"/>
+        <p id="domain"><a id = "link" href= ${url} target="_blank">${domainName}</a></p>
+        <p id="noteTtile">${title}</p>
+        <p id ="notes">${note}</p>
+        </span>
         </li>
         */
+       // appending tags
         domainName.appendChild(link)
         span.appendChild(img)
         span.appendChild(domainName)
         span.appendChild(noteTitle)
         span.appendChild(notes)
+        span.appendChild(icon)
         li.appendChild(span)
         notesList.appendChild(li)
     }
     
     /* 
-    Old cold didn't work for a tag as expected so re-write it with JS Html DOM creations
+    Old cold didn't work for a tag as expected so re-written it with JS Html DOM creations
 
     let savedNotes = JSON.parse( localStorage.getItem("myNotes") ) || []
     const notesList = document.getElementById("noteList")
