@@ -182,6 +182,10 @@ function saveNotes() {
 }
 
 function quitNoteMaking() {
+    const noteTitle = document.getElementById("title")
+    const notes = document.getElementById("Note")
+    noteTitle.value = ''
+    notes.value = ''
     homePopup.style.display = 'block'
     newNotePopup.style.display = 'none'
 }
