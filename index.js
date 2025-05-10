@@ -226,11 +226,13 @@ function fullViewNote(index){
     deleteNoteBTN.onclick = () => {
         savedNotes.splice(index,1)
         localStorage.setItem("myNotes", JSON.stringify(savedNotes))
+        toast("Deleted")
         exitFullViewNote()
     }
     saveEditBTN.onclick = () => {
         savedNotes[index] = [favIconUrl, domain, url, titleArea.value, noteArea.value]
         localStorage.setItem("myNotes", JSON.stringify(savedNotes))
+        toast("Updated")
         exitFullViewNote()
     }
 }
@@ -246,5 +248,5 @@ async function toast(message) {
     var x = document.getElementById("toast");
     x.innerText = message
     x.className = "show";
-    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 2000)
 }
