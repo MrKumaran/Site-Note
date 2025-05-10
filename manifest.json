@@ -4,7 +4,7 @@
     "name": "Site Note",
     "action": {
         "default_popup": "index.html",
-        "default_icon": "icon.png"
+        "default_icon": "asset/icon.png"
     },
     "permissions": [
         "tabs",

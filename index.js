@@ -4,26 +4,39 @@ const newNotePopup = document.getElementById("newNotePopup")
 const fullViewNotePopup = document.getElementById("noteFullView")
 
 //  Home popup buttons
-const newNotebtn = document.getElementById("new-btn")
-const deleteAllbtn = document.getElementById("delete-btn")
+const newNoteBTN = document.getElementById("new-btn")
+const deleteAllBTN = document.getElementById("delete-all-btn")
 
 // Newnote popup buttons
-const savebtn = document.getElementById("save-btn")
-const cancelbtn = document.getElementById("cancel-btn")
+const saveBTN = document.getElementById("save-btn")
+const cancelBTN = document.getElementById("cancel-btn")
 
-// Event listeners - Home page
-newNotebtn.addEventListener("click", newNote)
-deleteAllbtn.addEventListener("dblclick", deleteAllNotes)
-deleteAllbtn.addEventListener("click", function(){
-    toast("Double click to Delete all")
-})
+// Full view popup buttons
+const deleteNoteBTN = document.getElementById("deleteNote")
+const saveEditBTN = document.getElementById("saveEdit")
 
-// Event listeners - New Note Page
-savebtn.addEventListener("click", saveNotes)
-cancelbtn.addEventListener("click", quitNoteMaking)
+// Note list unorder list
+const notesList = document.getElementById("noteList")
 
 // getting data from local storage
 const savedNotes = JSON.parse(localStorage.getItem("myNotes")) || []
+
+// Event listeners - Home page
+newNoteBTN.addEventListener("click", newNote)
+deleteAllBTN.addEventListener("dblclick", deleteAllNotes)
+deleteAllBTN.addEventListener("click", ()=>toast("Double click to Delete all"))
+
+// Check for click on li element in noteList ul
+notesList.addEventListener("click", (event) => {
+    const li = event.target.closest(".noteListLI")
+    if (li && notesList.contains(li)) {
+        fullViewNote(li.dataset.note)
+    }
+})
+
+// Event listeners - New Note Page
+saveBTN.addEventListener("click", saveNotes)
+cancelBTN.addEventListener("click", quitNoteMaking)
 
 // start render notes
 renderNotes()
@@ -43,8 +56,6 @@ function deleteAllNotes() {
 }
 
 async function renderNotes() {
-    // Note list unorder list
-    const notesList = document.getElementById("noteList")
     notesList.innerHTML = ""
 
     // header li-span
@@ -56,7 +67,7 @@ async function renderNotes() {
     const notesHeader = document.createElement("p")
 
     headerSpan.id = "headerSpan"
-    faviconHeaderSpace.src = "favicon.svg"
+    faviconHeaderSpace.src = "asset/favicon.svg"
     faviconHeaderSpace.id = "faviconImage"
     faviconHeaderSpace.alt = "favicon icon"
     domainNameHeader.textContent = "Domain"
@@ -82,7 +93,6 @@ async function renderNotes() {
         const noteTitle = document.createElement("p")
         const link = document.createElement("a")
         const notes = document.createElement("p")
-        const icon = document.createElement("i")
 
         // img
         img.src = favIconUrl
@@ -97,9 +107,6 @@ async function renderNotes() {
         noteTitle.textContent = title
         notes.textContent = note
 
-        // delete icon
-        icon.className = "bi bi-trash deleteIcon"
-
         // li class name
         li.className = "noteListLI"
 
@@ -112,7 +119,6 @@ async function renderNotes() {
          span.appendChild(domainName)
          span.appendChild(noteTitle)
          span.appendChild(notes)
-         span.appendChild(icon)
          li.appendChild(span)
          notesList.appendChild(li)
 
@@ -136,14 +142,6 @@ async function renderNotes() {
         </li>
         */
     }
-    // Check for click on li element in noteList ul
-    notesList.addEventListener("click", function(event) {
-        const li = event.target.closest(".noteListLI")
-        if (li && notesList.contains(li)) {
-            fullViewNote(li.dataset.note)
-            }
-        }
-    )
 }
 
 // Save notes popup functions
@@ -194,6 +192,7 @@ function quitNoteMaking() {
 function fullViewNote(index){
     homePopup.style.display = 'none'
     fullViewNotePopup.style.display = 'flex'
+    const backIcon = document.getElementById("backIconID")
     const [favIconUrl, domain, url, title, note] = savedNotes[index]
     
     // Dom element
@@ -203,20 +202,39 @@ function fullViewNote(index){
     const noteDomain = document.getElementById("noteDomain")
     const noteArea = document.getElementById("noteArea")
     
-    // content
-    titleArea.textContent = title
+    // content - on load
+    titleArea.value = ''
+    noteArea.value = ''
+    noteFavIcon.src = ''
+    noteViewUrl.href = ''
+    noteDomain.textContent = ''
+
+    // content - to display
+    titleArea.value = title
     noteViewUrl.href = url
     noteFavIcon.src = favIconUrl
     noteDomain.textContent = domain
-    noteArea.textContent = note
-
-    const backIcon = document.getElementById("backIconID")
+    noteArea.value = note
+    
+    // button functionality
     backIcon.addEventListener("click", exitFullViewNote)
+
+    deleteNoteBTN.onclick = () => {
+        savedNotes.splice(index,1)
+        localStorage.setItem("myNotes", JSON.stringify(savedNotes))
+        exitFullViewNote()
+    }
+    saveEditBTN.onclick = () => {
+        savedNotes[index] = [favIconUrl, domain, url, titleArea.value, noteArea.value]
+        localStorage.setItem("myNotes", JSON.stringify(savedNotes))
+        exitFullViewNote()
+    }
 }
 
 function exitFullViewNote(){
     homePopup.style.display = 'block'
     fullViewNotePopup.style.display = 'none'
+    renderNotes()
 }
 
 // All popup functions
