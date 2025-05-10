@@ -104,8 +104,8 @@ async function renderNotes() {
         link.textContent = domain
 
         // p tag items
-        noteTitle.textContent = title
-        notes.textContent = note
+        noteTitle.textContent = title.length > 15 ? title.substring(0, 15).trim() + "..." : title
+        notes.textContent = note.length > 50 ? note.substring(0, 50).trim() + "..." : note
 
         // li class name
         li.className = "noteListLI"
@@ -160,14 +160,18 @@ function saveNotes() {
                 const domain = match ? match[1] : null
                 Notes.push([tabs[0].favIconUrl, domain, url, noteTitle.value, notes.value])
                 localStorage.setItem("myNotes", JSON.stringify(Notes))
-                noteTitle.value = ''
-                notes.value = ''
             }
         )
-        homePopup.style.display = 'block'
-        newNotePopup.style.display = 'none'
-        toast("Notes Saved")
-        renderNotes()
+        setTimeout(
+            ()=>{
+                noteTitle.value = ''
+                notes.value = ''
+                homePopup.style.display = 'block'
+                newNotePopup.style.display = 'none'
+                toast("Notes Saved")
+                renderNotes()
+            }, 100)
+        
         }
     else {
         if (noteTitle.value) {
