@@ -1,17 +1,20 @@
 {
     "manifest_version": 3,
-    "version": "1.0",
     "name": "Site Note",
+    "description": "Allow users to save website url along with a short note",
+    "version": "1.0",
     "action": {
-        "default_popup": "index.html",
-        "default_icon": "asset/icon.png"
+        "default_popup": "index.html"
+    },
+    "icons":{
+      "16": "asset/icon_16.png",
+      "32": "asset/icon_32.png",
+      "48": "asset/icon_48.png",
+      "128": "asset/icon_128.png"
     },
     "permissions": [
         "tabs",
         "storage",
-        "unlimitedStorage"
-      ],
-      "optional_permissions": [
         "unlimitedStorage"
       ]
 }
