@@ -50,6 +50,7 @@ function newNote() {
 function deleteAllNotes() {
     if(localStorage){
         localStorage.clear()
+        savedNotes = []
         toast("Deleted all Notes")
         renderNotes()
     }
@@ -156,9 +157,17 @@ function saveNotes() {
             }, 
             function(tabs){
                 const url = new URL(tabs[0].url)
-                const match = url.hostname.match(/^(?:www\.)?([a-zA-Z0-9-]+)\.com$/) // need to change regex
-                const domain = match ? match[1] : null
-                Notes.push([tabs[0].favIconUrl, domain, url, noteTitle.value, notes.value])
+                let hostname = url.hostname
+                 if (hostname.startsWith("www.")) {
+                    hostname = hostname.substring(4)
+                }
+                let domain = hostname.split('.')
+                if(domain.length > 2){
+                    domain = domain.slice(0,-1)
+                    hostname = domain.join('.')
+                }
+                console.log(hostname)
+                Notes.push([tabs[0].favIconUrl, hostname, url, noteTitle.value, notes.value])
                 localStorage.setItem("myNotes", JSON.stringify(Notes))
             }
         )
