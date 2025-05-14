@@ -35,6 +35,7 @@ textarea {
     text-align: center;
     resize:vertical;
     max-width: 100%;
+    min-height: 32px;
     max-height: 200px;
 }
 
@@ -212,7 +213,6 @@ label {
 #noteFullView {
     display: none; /* flex */
     flex-direction: column;
-    gap: 12px;
     padding-top: 4px;
     color: white;
     width: 100%;
@@ -242,6 +242,7 @@ label {
     font-weight: normal;
     resize: unset;
     border: inherit;
+    margin: 0;
 }
 
 #titleArea:focus {
@@ -261,6 +262,8 @@ label {
     font-size: 20px;
     border: inherit;
     padding: 4px;
+    margin-top: 4px;
+    margin-bottom: 8px;
 }
 
 #noteArea:focus {
