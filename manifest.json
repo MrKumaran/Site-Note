@@ -4,7 +4,7 @@
     "description": "Allow users to save website url along with a short note",
     "version": "1.0",
     "action": {
-        "default_popup": "index.html"
+        "default_popup": "popUp/index.html"
     },
     "icons":{
       "16": "asset/icon_16.png",

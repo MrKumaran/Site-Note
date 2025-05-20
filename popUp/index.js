@@ -39,7 +39,7 @@ saveBTN.addEventListener("click", saveNotes)
 cancelBTN.addEventListener("click", quitNoteMaking)
 
 // start render notes
-renderNotes()
+renderNotes().then(() => {} )
 
 // Home popup functions
 function newNote() {
@@ -48,11 +48,10 @@ function newNote() {
 }
 
 function deleteAllNotes() {
-    if(localStorage){
+    if(savedNotes){ // fix this before production
         localStorage.clear()
-        savedNotes = []
-        toast("Deleted all Notes")
-        renderNotes()
+        globalThis.savedNotes = []
+        renderNotes().then(() => toast("Deleted all Notes"))
     }
 }
 
@@ -68,7 +67,7 @@ async function renderNotes() {
     const notesHeader = document.createElement("p")
 
     headerSpan.id = "headerSpan"
-    faviconHeaderSpace.src = "asset/favicon.svg"
+    faviconHeaderSpace.src = "../asset/favicon.svg"
     faviconHeaderSpace.id = "faviconImage"
     faviconHeaderSpace.alt = "favicon icon"
     domainNameHeader.textContent = "Domain"
@@ -112,7 +111,7 @@ async function renderNotes() {
         li.className = "noteListLI"
 
         // li-note to identifiy
-        li.dataset.note = i
+        li.dataset.note = i.toString()
 
         // appending tags
          domainName.appendChild(link)
@@ -130,7 +129,7 @@ async function renderNotes() {
         3-> domain
         4-> noteTitle
         5-> notes
-        
+
         layout in html equivalent
         <li class = "noteListLI" dataSet=${title}>
             <span class = "spanItems">
@@ -154,7 +153,7 @@ function saveNotes() {
         chrome.tabs.query({
                 active: true,
                 currentWindow: true
-            }, 
+            },
             function(tabs){
                 const url = new URL(tabs[0].url)
                 let hostname = url.hostname
@@ -177,17 +176,17 @@ function saveNotes() {
                 notes.value = ''
                 homePopup.style.display = 'block'
                 newNotePopup.style.display = 'none'
-                toast("Notes Saved")
-                renderNotes()
+                toast("Notes Saved").then(()=>{})
+                renderNotes().then(()=>{})
             }, 100)
-        
+
         }
     else {
         if (noteTitle.value) {
-            toast("Notes can't be blank")
+            toast("Notes can't be blank").then(()=>{})
         }
         else {
-            toast("Title can't be blank")
+            toast("Title can't be blank").then(()=>{})
         }
     }
 }
@@ -207,14 +206,14 @@ function fullViewNote(index){
     fullViewNotePopup.style.display = 'flex'
     const backIcon = document.getElementById("backIconID")
     const [favIconUrl, domain, url, title, note] = savedNotes[index]
-    
+
     // Dom element
     const titleArea = document.getElementById("titleArea")
     const noteViewUrl = document.getElementById("noteViewUrl")
     const noteFavIcon = document.getElementById("noteFavIcon")
     const noteDomain = document.getElementById("noteDomain")
     const noteArea = document.getElementById("noteArea")
-    
+
     // content - on load
     titleArea.value = ''
     noteArea.value = ''
@@ -228,20 +227,20 @@ function fullViewNote(index){
     noteFavIcon.src = favIconUrl
     noteDomain.textContent = domain
     noteArea.value = note
-    
+
     // button functionality
     backIcon.addEventListener("click", exitFullViewNote)
 
     deleteNoteBTN.onclick = () => {
         savedNotes.splice(index,1)
         localStorage.setItem("myNotes", JSON.stringify(savedNotes))
-        toast("Deleted")
+        toast("Deleted").then(()=>{})
         exitFullViewNote()
     }
     saveEditBTN.onclick = () => {
         savedNotes[index] = [favIconUrl, domain, url, titleArea.value, noteArea.value]
         localStorage.setItem("myNotes", JSON.stringify(savedNotes))
-        toast("Updated")
+        toast("Updated").then(()=>{})
         exitFullViewNote()
     }
 }
@@ -249,12 +248,12 @@ function fullViewNote(index){
 function exitFullViewNote(){
     homePopup.style.display = 'block'
     fullViewNotePopup.style.display = 'none'
-    renderNotes()
+    renderNotes().then(()=>{})
 }
 
 // All popup functions
 async function toast(message) {
-    var x = document.getElementById("toast");
+    let x = document.getElementById("toast");
     x.innerText = message
     x.className = "show";
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 2000)
