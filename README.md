@@ -1,15 +1,15 @@
 # Site-Note
-
+<br>
 **Idea here is to save notes for particular site on browser itself using this extension**
-
----
-
+<br>
+<br>
 ## Why it exist
-
+<br>
 A lot of times, people bookmark websites but later forget why they bookmarked them.
 <br>
 This can help them save the website URL along with a note explaining why they saved that page.
-
+<br>
+<br>
 ## How to add this extension to browsers(Chromium based browser)
 For now this extension is not available via chrome web store but soon will be
 <br>
@@ -33,6 +33,7 @@ or Download via [link](https://github.com/MrKumaran/Site-Note/archive/refs/heads
 **Step 3:** Select Load unpacked and select .zip file you downloaded and Done!
 <br>
 ### Tip
+<br>
 Use this extension with [Wayback machine](https://chromewebstore.google.com/detail/fpnmgdkabkmnadcjpehmlllkndpkmiak?utm_source=item-share-cb) extension, which will help incase website is down or no longer exist
 <br>
 <br>
@@ -47,6 +48,7 @@ File Structure
     ├── manifest.json
     └── README.md
 ```
+<br>
 ## Tech tab
 <br>
 If any bug or need any feature kindly open an issue in issue tab in [github issue](https://github.com/MrKumaran/Site-Note/issues)
@@ -57,7 +59,7 @@ If any bug or need any feature kindly open an issue in issue tab in [github issu
 Pull request are welcomed for optimization and new feature.
 <br>
 ---
-
+<br>
 **Issue format:**
 <br>
 <br>
