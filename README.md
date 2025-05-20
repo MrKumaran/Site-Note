@@ -6,16 +6,18 @@
 
 ## Why it exist
 
-Lot of time people bookmark websites but later down the road they forget why they bookmarked it.
+A lot of times, people bookmark websites but later forget why they bookmarked them.
 <br>
-This can help them save website url along with note, why they saved that page.
+This can help them save the website URL along with a note explaining why they saved that page.
 
 ## How to add this extension to browsers(Chromium based browser)
 For now this extension is not available via chrome web store but soon will be
 <br>
 <br>
-**Step 1:** Get copy of this repository in your system<br>
-Clone using CMD:
+**Step 1:** Get copy of this repository in your system
+<br>
+<br>
+Clone using git Command:
 ``` GIT Clone
 git clone https://github.com/MrKumaran/Site-Note.git
 ```
@@ -34,6 +36,7 @@ or Download via [link](https://github.com/MrKumaran/Site-Note/archive/refs/heads
 Use this extension with [Wayback machine](https://chromewebstore.google.com/detail/fpnmgdkabkmnadcjpehmlllkndpkmiak?utm_source=item-share-cb) extension, which will help incase website is down or no longer exist
 <br>
 <br>
+File Structure
 ``` File Structure
     │── assests -> (dir) Contains Favicons
     │── SS -> (dir) contains screenshots
@@ -45,6 +48,7 @@ Use this extension with [Wayback machine](https://chromewebstore.google.com/deta
     └── README.md
 ```
 ## Tech tab
+<br>
 If any bug or need any feature kindly open an issue in issue tab in [github issue](https://github.com/MrKumaran/Site-Note/issues)
 <br>
 *Before opening an issue, See issues in open as well as closed ones.
