@@ -18,10 +18,21 @@ const saveEditBTN = document.getElementById("saveEdit")
 // Note list unorder list
 const notesList = document.getElementById("noteList")
 
+// getting data from local storage
+const savedNotes = JSON.parse(localStorage.getItem("myNotes")) || []
+
 // Event listeners - Home page
 newNoteBTN.addEventListener("click", newNote)
 deleteAllBTN.addEventListener("dblclick", deleteAllNotes)
 deleteAllBTN.addEventListener("click", ()=>toast("Double click to Delete all"))
+
+// Check for click on li element in noteList ul
+notesList.addEventListener("click", (event) => {
+    const li = event.target.closest(".noteListLI")
+    if (li && notesList.contains(li)) {
+        fullViewNote(li.dataset.note)
+    }
+})
 
 // Event listeners - New Note Page
 saveBTN.addEventListener("click", saveNotes)
@@ -36,17 +47,16 @@ function newNote() {
     newNotePopup.style.display = 'flex'
 }
 
-// delete All notes
 function deleteAllNotes() {
-    localStorage.clear()
-    renderNotes()
-    toast("Deleted all").then(()=>{})
+    if(savedNotes){ // TODO fix this before production
+        localStorage.clear()
+        renderNotes()
+    }
 }
 
 function renderNotes() {
-    // getting data from local storage
-    const savedNotes = JSON.parse(localStorage.getItem("myNotes")) || []
-    
+
+    const notesFromLocal = JSON.parse(localStorage.getItem("myNotes")) || []
     notesList.innerHTML = ""
 
     // header li-span
@@ -74,7 +84,7 @@ function renderNotes() {
 
     // loop to render all notes in local storage
     for (let i = savedNotes.length-1; i > -1 ; i--) {
-        const [favIconUrl, domain, url, title, note] = savedNotes[i]
+        const [favIconUrl, domain, url, title, note] = notesFromLocal[i]
 
         // HTML tags creation
         const li = document.createElement("li")
@@ -133,20 +143,10 @@ function renderNotes() {
         </li>
         */
     }
-
-    // Check for click on li element in noteList ul
-    notesList.addEventListener("click", (event) => {
-        const li = event.target.closest(".noteListLI")
-        if (li && notesList.contains(li)) {
-            fullViewNote(li.dataset.note)
-        }
-    })
 }
 
 // Save notes popup functions
 function saveNotes() {
-    // getting data from local storage
-    const savedNotes = JSON.parse(localStorage.getItem("myNotes")) || []
     const noteTitle = document.getElementById("title")
     const notes = document.getElementById("Note")
     let Notes = savedNotes
@@ -203,8 +203,6 @@ function quitNoteMaking() {
 
 // Note full view popup function
 function fullViewNote(index){
-    // getting data from local storage
-    const savedNotes = JSON.parse(localStorage.getItem("myNotes")) || []
     homePopup.style.display = 'none'
     fullViewNotePopup.style.display = 'flex'
     const backIcon = document.getElementById("backIconID")
