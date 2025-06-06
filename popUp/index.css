@@ -323,3 +323,9 @@ label {
     from {bottom: 12px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
+
+/* Little animation */
+button:hover {
+    filter: brightness(90%);
+    transform: translateY(-4px);
+}
