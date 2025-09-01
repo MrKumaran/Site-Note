@@ -48,9 +48,9 @@ function newNote() {
 }
 
 function deleteAllNotes() {
-    if(savedNotes){ // TODO fix this before production
+    if(savedNotes){
         localStorage.clear()
-        renderNotes()
+        setTimeout(renderNotes, 100)
     }
 }
 
