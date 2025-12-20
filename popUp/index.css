@@ -1,18 +1,64 @@
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../asset/webfonts/JetBrainsMono-Regular.woff2') format('woff');
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../asset/webfonts/JetBrainsMono-Italic.woff2') format('woff');
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: medium;
+    font-weight: 400;
+    src: url('../asset/webfonts/JetBrainsMono-Medium.woff2') format('woff');
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: bold;
+    font-weight: 400;
+    src: url('../asset/webfonts/JetBrainsMono-Bold.woff2') format('woff');
+}
+
 /* general */
+:root {
+    --bg-primary: #000000;
+    --bg-secondary: #111111;
+
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+
+    --border: #333333;
+
+    --accent: #8b5cf6;
+    --accent-hover: #7c3aed3d;
+
+    --green: #10b981;
+    --red: #ef4444;
+
+    --border-radius: 8px;
+}
+
 html {
-    height: 100px;
+    height: 120px;
     overflow: scroll;
 }
 
 body {
     margin: auto;
-    padding-top: 40px;
-    padding: 20px;
-    font-family: Arial, Helvetica, sans-serif;
+    padding: 40px 20px 20px;
+    font-family: "JetBrains Mono";
     width: auto;
-    min-width: 500px;
-    background-color: #1B244A;
+    min-width: 600px;
+    background-color: var(--bg-primary);
     min-height: 100px;
+    border: 4px var(--accent-hover) solid;
 }
 
 span {
@@ -20,7 +66,7 @@ span {
 }
 
 a {
-    color: white;
+    color: var(--text-primary);
 }
 
 textarea {
@@ -30,8 +76,8 @@ textarea {
     padding-top: 20px;
     border: none;
     border-bottom: 1px solid;
-    background-color: #1B244A;
-    color: white;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     text-align: center;
     resize: vertical;
     max-width: 100%;
@@ -40,42 +86,44 @@ textarea {
 }
 
 textarea:focus {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--accent);
     outline: none;
 }
 
 input {
     text-align: center;
     border: none;
+    font-family: "JetBrains Mono";
     font-size: large;
     padding: 12px 20px;
     outline: none;
-    background-color: #1B244A;
-    color: white;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 input:focus {
     outline: none;
     text-align: center;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--accent);
 }
 
 button {
-    color: white;
-    background: #1B244A;
+    color: var(--text-primary);
+    background: var(--bg-primary);
     padding: 8px 16px;
     margin: 4px;
     border-radius: 25px;
-    border: 2px solid white;    
+    border: 2px solid var(--border);
     text-align: center;
-    font-weight: bold;
+    font-family: "JetBrains Mono";
+    font-style: bold;
     min-width: 100px;
 }
 
 button:hover {
-    background: rgb(0, 255, 0);
-    color: black;
-    border: 2px solid rgb(0, 255, 0);
+    background: var(--green);
+    color: var(--bg-primary);
+    border: 2px solid var(--border);
 }
 
 span {
@@ -93,9 +141,9 @@ ul {
     width: 100%;
     padding: 12px;
     box-sizing: border-box;
-    background-color: rgb(239, 231, 231);
+    background-color: var(--text-primary);
     margin-bottom: 8px;
-    border-radius: var(--borderRadius);
+    border-radius: var(--border-radius);
     font-size: 20px;
 }
 
@@ -121,9 +169,9 @@ button span {
 }
 
 #delete-all-btn:hover {
-    color: white;
-    background: red;
-    border: 2px solid red;
+    color: var(--text-primary);
+    background: var(--red);
+    border: 2px solid var(--red);
 }
 
 #homePopupButtonSpan {
@@ -138,14 +186,14 @@ button span {
 #faviconImage {
     width: 20px;
     height: 20px;
-    background-color: white;
+    background-color: var(--accent);
 }
 
 li {
     padding-right: 10px;
     padding-left: 10px;
     margin: 0;
-    color: white;
+    color: var(--text-primary);
 }
 
 li span {
@@ -155,7 +203,7 @@ li span {
 }
 
 li span p {
-    border-left: 1px solid #455171;
+    border-left: 1px solid var(--border);
     margin-right: 12px;
     margin-left: 12px;
     padding-left: 12px;
@@ -169,8 +217,8 @@ li:first-of-type:hover {
 }
 
 li:hover {
-    background-color: #272d3e;
-    border-bottom: 1px solid white;
+    background-color: var(--accent-hover);
+    border-bottom: 1px solid var(--accent);
 }
 
 img {
@@ -193,7 +241,7 @@ img {
     align-items: center;
     padding: 20px;
     padding-top: 4px;
-    color: white;
+    color: var(--text-primary);
     height: 200px;
 }
 
@@ -203,9 +251,9 @@ label {
 }
 
 #cancel-btn:hover {
-    background-color: red;
-    border: 1px solid red;
-    color: aliceblue;
+    background-color: var(--red);
+    border: 1px solid var(--red);
+    color: var(--text-primary);
 }
 
 
@@ -214,7 +262,7 @@ label {
     display: none; /* flex */
     flex-direction: column;
     padding-top: 4px;
-    color: white;
+    color: var(--text-primary);
     width: 100%;
     align-items: center;
 }
@@ -246,7 +294,7 @@ label {
 }
 
 #titleArea:focus {
-    border-bottom: 1px solid white;  
+    border-bottom: 1px solid var(--accent);
 }
 
 #noteViewUrl {
@@ -267,7 +315,7 @@ label {
 }
 
 #noteArea:focus {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--accent);
 }
 
 #noteFullViewPopupButtonSpan {
@@ -275,9 +323,9 @@ label {
 }
 
 #deleteNote:hover {
-    background-color: red;
-    border: 1px solid red;
-    color: antiquewhite;
+    background-color: var(--red);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
 }
 
 
@@ -286,9 +334,10 @@ label {
     visibility: hidden;
     min-width: 100px;
     margin-left: -90px;
-    background-color: #333;
-    color: #fff;
+    background-color: var(--accent);
+    color: var(--text-primary);
     text-align: center;
+    font-weight: bold;
     border-radius: 12px;
     padding: 16px;
     position: fixed;
