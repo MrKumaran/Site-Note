@@ -4,7 +4,6 @@
         <title>Site Note</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="index.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     </head>
 
     <body>
@@ -12,8 +11,17 @@
         <div id="homePopup">
             <!-- <input type="text" id="input-el"> later -->
             <span id="homePopupButtonSpan">
-                <button id="new-btn"><span><i class="bi bi-plus icon-1"></i>NEW</span></button>
-                <button id="delete-all-btn"><span><i class="bi bi-trash icon-2"></i>DELETE ALL</span></button>
+                <button id="new-btn"><span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus icon-1" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                NEW</span></button>
+                <button id="delete-all-btn"><span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash icon-2" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                DELETE ALL</span></button>
             </span>
             <ul id="noteList">
                 <!-- Render Notes from local storage via JS -->
@@ -21,14 +29,14 @@
         </div>
         <!-- New Note Popup -->
         <div id="newNotePopup">
-            <span>
-                <label for="title">Title:</label>
-                <input type="text" id="title" placeholder="Title">
-            </span>
-            <span style="width: 100%;">
-                <label for="Note">Note:</label>
-                <textarea id="Note" placeholder="Notes..."></textarea>
-            </span>
+            <div class="note-input-container">
+                <input type="text" id="title" class="note-input" placeholder=" " autocomplete="off">
+                <label for="title" class="note-label">Title</label>
+            </div>
+            <div class="note-input-container">
+                <textarea id="Note" class="note-textarea" placeholder=" "></textarea>
+                <label for="Note" class="note-label">Note</label>
+            </div>
             <span>
                 <button id="save-btn">Save</button>
                 <button id="cancel-btn">Cancel</button>
@@ -36,7 +44,9 @@
         </div>
         <div id="noteFullView">
             <span>
-                <i class="bi bi-arrow-left-circle backIcon" id="backIconID"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left-circle backIcon" id="backIconID" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                </svg>
                 <textarea name="titleArea" id="titleArea"></textarea>
             </span>
             <a href="#" id="noteViewUrl"><img src="../asset/favicon.svg" alt="domainIcon" id="noteFavIcon"><p id="noteDomain"></p></a>
