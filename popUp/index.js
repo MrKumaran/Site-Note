@@ -166,7 +166,6 @@ function saveNotes() {
                     domain = domain.slice(0,-1)
                     hostname = domain.join('.')
                 }
-                console.log(hostname)
                 Notes.push([tabs[0].favIconUrl, hostname, url, noteTitle.value, notes.value])
                 localStorage.setItem("myNotes", JSON.stringify(Notes))
             }
