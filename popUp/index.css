@@ -290,8 +290,10 @@ label {
 }
 
 .backIcon:hover {
-    background-color: white;
-    color: black;
+    background-color: var(--accent);
+    width: 33px;
+    height: 33px;
+    /* background-color: var(--accent-hover); */
 }
 
 .back-icon-wrapper {
@@ -336,19 +338,21 @@ label {
 /* Toast */
 #toast {
     visibility: hidden;
-    min-width: 100px;
-    margin-left: -90px;
-    background-color: var(--accent);
+    min-width: 120px;
+    background-color: var(--accent-hover);
+    backdrop-filter: blur(5px);
     color: var(--text-primary);
     text-align: center;
-    font-weight: bold;
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 50px;
+    padding: 12px 24px;
     position: fixed;
-    z-index: 1;
+    z-index: 100;
     left: 50%;
-    bottom: 12px;
-    font-size: 16px;
+    transform: translateX(-50%);
+    bottom: 30px;
+    font-size: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 #toast.show {
@@ -359,44 +363,44 @@ label {
 
 @-webkit-keyframes fadein {
     from {
-        bottom: 0;
+        bottom: 10px;
         opacity: 0;
     } 
     to {
-        bottom: 12px;
+        bottom: 30px;
         opacity: 1;
     }
 }
 
 @keyframes fadein {
     from {
-        bottom: 0;
+        bottom: 10px;
         opacity: 0;
     }
     to {
-        bottom: 12px;
+        bottom: 30px;
         opacity: 1;
     }
 }
 
 @-webkit-keyframes fadeout {
     from {
-        bottom: 12px;
+        bottom: 30px;
         opacity: 1;
     } 
     to {
-        bottom: 0;
+        bottom: 10px;
         opacity: 0;
     }
 }
 
 @keyframes fadeout {
     from {
-        bottom: 12px;
+        bottom: 30px;
         opacity: 1;
     }
     to {
-        bottom: 0;
+        bottom: 10px;
         opacity: 0;
     }
 }
